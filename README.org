@@ -1,0 +1,7 @@
+* Knowledge Graphs
+
+** Tips & Tricks
+
+For creating TBOX and ABOX it is better to use Jenna.
+
+The problem with the graphical tools is that once you have finished the TBOX you must upload it to Jenna to create the ABOX instances.
