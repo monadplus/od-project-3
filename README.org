@@ -1,5 +1,7 @@
 * Knowledge Graphs
 
+Ontology examples: http://owl.man.ac.uk/tutorial/
+
 ** Project setup
 
 There subdirectory [[file:graphdb-docker/][graphdb-docker]] contains all you need to run graphDB inside a docker image. Read the README since you need to download =graphdb-free-9.7.0-dist.zip= from their website (the size of the file is 200 MB which is bigger than the allowed since by github).

@@ -1,2 +1,4 @@
 /free-edition/*.zip
 /graphdb-data
+dbpedia_2014.owl
+instance_types_en.nt

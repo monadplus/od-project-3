@@ -1,0 +1,266 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://localhost:7200/publications"
+         xmlns="http://localhost:7200/publications#">
+
+<owl:Ontology rdf:about="http://localhost:7200/publications"/>
+
+<owl:ObjectProperty rdf:about="#reviews">
+  <rdfs:domain rdf:resource="#Reviewer"/>
+  <rdfs:range rdf:resource="#Draft"/>
+  <owl:inverseOf rdf:resource="#isReviewedBy"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#isReviewedBy">
+  <rdfs:domain rdf:resource="#Draft"/>
+  <rdfs:range rdf:resource="#Reviewer"/>
+  <owl:inverseOf rdf:resource="#reviews"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#authorOf">
+  <rdfs:domain rdf:resource="#Author"/>
+  <rdfs:range rdf:resource="#Paper"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasTopic">
+  <rdfs:domain rdf:resource="#Journal"/>
+  <rdfs:domain rdf:resource="#Paper"/>
+  <rdfs:domain rdf:resource="#Conference"/>
+  <rdfs:range rdf:resource="#Topic"/>
+</owl:ObjectProperty>
+
+<owl:DatatypeProperty rdf:about="#name">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Author"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#title">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Paper"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#subtitle">
+  <rdfs:domain rdf:resource="#Paper"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:subPropertyOf rdf:resource="#title"/>
+</owl:DatatypeProperty>
+
+<owl:Class rdf:about="#Person">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Reviewer">
+  <rdfs:subClassOf rdf:resource="#Person"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Author">
+  <rdfs:subClassOf rdf:resource="#Person"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Authority">
+  <rdfs:subClassOf rdf:resource="#Person"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Chair">
+  <rdfs:subClassOf rdf:resource="#Authority"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:complementOf rdf:resource="#Editor"/>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#Editor">
+  <rdfs:subClassOf rdf:resource="#Authority"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:complementOf rdf:resource="#Chair"/>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#Topic">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Paper">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Poster">
+  <rdfs:subClassOf rdf:resource="#Paper"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:complementOf rdf:resource="#OtherPaper"/>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#OtherPaper">
+  <rdfs:subClassOf rdf:resource="#Paper"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:complementOf rdf:resource="#Poster"/>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#Full">
+  <rdfs:subClassOf rdf:resource="#OtherPaper"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Short">
+  <rdfs:subClassOf rdf:resource="#OtherPaper"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Demo">
+  <rdfs:subClassOf rdf:resource="#OtherPaper"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Draft">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#isReviewedBy"/>
+      <owl:onClass rdf:resource="#Reviewer"/>
+      <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</owl:minQualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#Publication">
+  <rdfs:subClassOf rdf:resource="#Draft"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Venue">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Edition">
+  <rdfs:subClassOf rdf:resource="#Venue"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:complementOf rdf:resource="#Volume"/>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#Volume">
+  <rdfs:subClassOf rdf:resource="#Venue"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:complementOf rdf:resource="#Edition"/>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#Journal">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Conference">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Workshop">
+  <rdfs:subClassOf rdf:resource="#Conference"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <owl:Class>
+          <owl:complementOf rdf:resource="#Symposium"/>
+        </owl:Class>
+        <owl:Class>
+          <owl:complementOf rdf:resource="#ExpertGroup"/>
+        </owl:Class>
+        <owl:Class>
+          <owl:complementOf rdf:resource="#RegularConference"/>
+        </owl:Class>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#Symposium">
+  <rdfs:subClassOf rdf:resource="#Conference"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <owl:Class>
+          <owl:complementOf rdf:resource="#Workshop"/>
+        </owl:Class>
+        <owl:Class>
+          <owl:complementOf rdf:resource="#ExpertGroup"/>
+        </owl:Class>
+        <owl:Class>
+          <owl:complementOf rdf:resource="#RegularConference"/>
+        </owl:Class>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#ExpertGroup">
+  <rdfs:subClassOf rdf:resource="#Conference"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <owl:Class>
+          <owl:complementOf rdf:resource="#Workshop"/>
+        </owl:Class>
+        <owl:Class>
+          <owl:complementOf rdf:resource="#Symposium"/>
+        </owl:Class>
+        <owl:Class>
+          <owl:complementOf rdf:resource="#RegularConference"/>
+        </owl:Class>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#RegularConference">
+  <rdfs:subClassOf rdf:resource="#Conference"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <owl:Class>
+          <owl:complementOf rdf:resource="#Workshop"/>
+        </owl:Class>
+        <owl:Class>
+          <owl:complementOf rdf:resource="#Symposium"/>
+        </owl:Class>
+        <owl:Class>
+          <owl:complementOf rdf:resource="#ExpertGroup"/>
+        </owl:Class>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<Author rdf:about="#Marc">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <authorOf rdf:resource="#paper1"/>
+</Author>
+
+<Paper rdf:about="#paper1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Principia Matematica</title>
+  <subtitle rdf:datatype="http://www.w3.org/2001/XMLSchema#string">From first principle</subtitle>
+</Paper>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#Full"/>
+    <rdf:Description rdf:about="#Short"/>
+    <rdf:Description rdf:about="#Demo"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+
+</rdf:RDF>
