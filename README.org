@@ -1,66 +1,23 @@
 * Knowledge Graphs
 
-Ontology examples: http://owl.man.ac.uk/tutorial/
-
 ** Project setup
 
 There subdirectory [[file:graphdb-docker/][graphdb-docker]] contains all you need to run graphDB inside a docker image. Read the README since you need to download =graphdb-free-9.7.0-dist.zip= from their website (the size of the file is 200 MB which is bigger than the allowed since by github).
 
-** Tasks
+#+begin_src
+cd graphdb-docker
+docker-compose up --detach
+#+end_src
 
-*** Section A: Explore BDPedia
+** Create TBOX & ABOX
 
-Explore DBPedia: using the interface and SPARQL.
+#+begin_src sh
+pip install cython
+pip install owlready2
+cd src
+python3 main.py
+#+end_src
 
-There is no delivery.
+** Ontology examples
 
-*** Section B: Ontology
-
-**** Part I: TBOX
-
-Same schema as Lab 1 + extras.
-
-Decide what knowledge graph language to use: RDF, RDFS, OWL (can you express constraints in RFDS?)
-
-If you are using Jena, you need to provide:
-  - Graphical representation [[https://gra.fo/][Gra.fo]]
-  - OWL files
-  - Code
-
-- What about using https://pythonhosted.org/Owlready/index.html ?
-- Mature for RDFS https://rdflib.readthedocs.io/en/stable/index.html
-
-**** Part II: ABOX
-
-Adapt the data from Lab 1.
-
-Use Jena (RDF/Ontology API) to generate the OWL ontology. Generate turtle tuples. It also has an inference API.
-
-Better load the data to graphDB using the import and write queries there.
-
-1. Methology used to define your ABOX
-2. Code
-3. OWL files
-
-**** Part III: Ontology
-
-Load TBOX and ABOX to GraphDB linking them via rdf:type (depending on the inference, you may save generating quite a few of them).
-
-The link can be generated using SPARQL CONSTRUCT or programatically using Jena/RDFLib.
-
-Check tasks to delivery since there are multiple questions to answer
-
-**** Part IV: Querying
-
-Provide SPARQL queries.
-
-1. Find all Authors.
-2. Find all properties whose domain is Author.
-3. Find all properties whose domain is either Conference or Journal.
-4. Find all the papers writte by a given author that where published in database conferences.
-
-** Tips & Tricks
-
-For creating TBOX and ABOX it is better to use Jenna.
-
-The problem with the graphical tools is that once you have finished the TBOX you must upload it to Jenna to create the ABOX instances.
+- http://owl.man.ac.uk/tutorial/
