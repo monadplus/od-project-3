@@ -25,10 +25,31 @@ cd src
 python3 reasoner.py
 #+end_src
 
+You can generate only the TBox:
+
+#+begin_src sh
+cd src
+python3 tbox.py
+#+end_src
+
+
 ** Load the ontology into GraphDB
 
-Simple, open graphDB (recall to start it using our docker image) and
-create a repository and import the =src/out/publications.rdf=.
+Simple, open graphDB (recall to start it using our docker image) crate a repository
+
+#+begin_src
+Repository ID: publications
+Ruleset: OWL2-SQL (Optimized)
+#+end_src
+
+and import =publications.rdf= (contains both the TBox and ABox).
+
+#+begin_src
+Base IRI: http://localhost:7200/publications
+Target graphs: From data
+#+end_src
+
+The process took 19 seconds on a /Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz/.
 
 ** Ontology examples
 

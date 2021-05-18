@@ -81,17 +81,29 @@ class ExpertGroup(Conference):
 class RegularConference(Conference):
     namespace = onto
 
-###### Properties
+###### Relationships
 
 class chairOf(owl.ObjectProperty):
     namespace = onto
     domain = [Chair]
     range = [Conference]
 
+class directedBy(owl.ObjectProperty):
+    namespace = onto
+    domain = [Conference]
+    range = [Chair]
+    inverse_property = chairOf
+
 class editorOf(owl.ObjectProperty):
     namespace = onto
     domain = [Editor]
     range = [Journal]
+
+class editedBy(owl.ObjectProperty):
+    namespace = onto
+    domain = [Journal]
+    range = [Editor]
+    inverse_property = editorOf
 
 class editionOf(owl.ObjectProperty):
     namespace = onto
@@ -108,10 +120,16 @@ class published(owl.ObjectProperty):
     domain = [AcceptedDraft]
     range = [Venue]
 
-class submitted(owl.ObjectProperty):
+class submittedTo(owl.ObjectProperty):
     namespace = onto
     domain = [Paper]
     range = [Draft]
+
+class draftOf(owl.ObjectProperty):
+    namespace = onto
+    domain = [Draft]
+    range = [Paper]
+    inverse_property = submittedTo
 
 class responsibleFor(owl.ObjectProperty):
     namespace = onto
@@ -151,11 +169,13 @@ class hasTopic(owl.ObjectProperty):
     domain = [Paper | Conference | Journal]
     range = [Topic]
 
-###### Attributes
+###### Properties
 
 # FunctionalProperty: single value for a given instance
 
-class name(owl.DataProperty, owl.FunctionalProperty):
+# Do not use 'name' as attribute since it is already used in owlready2.
+
+class fullname(owl.DataProperty, owl.FunctionalProperty):
     namespace = onto
     domain = [Person | Reviewer | Author \
               | Authority | Chair | Editor \
@@ -197,7 +217,8 @@ Edition.is_a.append(editionOf.exactly(1, Conference))
 Volume.is_a.append(volumeOf.exactly(1, Journal)) # volumeOf.min(1, Journal) & volumeOf.max(1, Journal)
 
 Draft.is_a.append(isReviewedBy.min(2, Reviewer))
-Draft.is_a.append(owl.Inverse(submitted).exactly(1, Paper))
+# Draft.is_a.append(draftOf.exactly(1, Paper))
+Draft.is_a.append(owl.Inverse(submittedTo).exactly(1, Paper))
 Draft.is_a.append(supervisedBy.exactly(1, Authority))
 
 AcceptedDraft.is_a.append(published.exactly(1, Venue))
@@ -231,6 +252,6 @@ owl.AllDisjoint([Edition, Volume])
 owl.AllDisjoint([Chair, Editor])
 
 if __name__ == "__main__":
-    file = "out/publications.rdf"
+    file = "out/tbox.rdf"
     onto.save(file=file, format="rdfxml")
     print(f'TBox saved into {file}')
