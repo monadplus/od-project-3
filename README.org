@@ -9,14 +9,26 @@ cd graphdb-docker
 docker-compose up --detach
 #+end_src
 
-** Create TBOX & ABOX
+** Create TBox & ABox
 
 #+begin_src sh
 pip install cython
 pip install owlready2
 cd src
-python3 main.py
+python3 abox.py
 #+end_src
+
+** Check your TBox is sound
+
+#+begin_src sh
+cd src
+python3 reasoner.py
+#+end_src
+
+** Load the ontology into GraphDB
+
+Simple, open graphDB (recall to start it using our docker image) and
+create a repository and import the =src/out/publications.rdf=.
 
 ** Ontology examples
 
