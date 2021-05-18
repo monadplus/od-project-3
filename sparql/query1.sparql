@@ -1,0 +1,7 @@
+# Find all Authors
+PREFIX : <http://localhost:7200/publications#>
+
+select ?name where {
+	?author a :Author .
+	?author :fullname ?name
+} limit 100

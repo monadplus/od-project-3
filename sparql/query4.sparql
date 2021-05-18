@@ -1,0 +1,17 @@
+# Find all the papers written by a given author that where published in database conferences.
+PREFIX : <http://localhost:7200/publications#>
+PREFIX rdf: <http://www.w3.org/2000/01/rdf-schema#>
+
+select ?author (group_concat(?title) as ?titles) where {
+    ?author :authorOf ?paper .
+    ?paper :title ?title .
+    ?paper :submittedTo ?draft .
+    ?draft a :AcceptedDraft .
+    ?draft :published ?venue .
+    ?venue a :Edition .
+    ?venue :hasTopic ?topic .
+    ?topic :fullname ?label .
+    filter contains(?label, "big data")
+}
+group by ?author
+limit 100

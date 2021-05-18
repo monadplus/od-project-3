@@ -1,0 +1,9 @@
+# Find all properties whose domain is either Conference or Journal
+PREFIX : <http://localhost:7200/publications#>
+PREFIX rdf: <http://www.w3.org/2000/01/rdf-schema#>
+
+select distinct ?p where {
+    {?p rdf:domain :Conference}
+    UNION
+    {?p rdf:domain :Journal}
+} limit 100
